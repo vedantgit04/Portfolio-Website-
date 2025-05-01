@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- AOS (Animate On Scroll) CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #1f2937; /* Dark gray */
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6); /* Neon blue to purple */
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #3b82f6;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid transparent;
+        }
+        .card:hover {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6;
+        }
+        .btn-glow {
+            animation: pulse 2s infinite;
+            transition: box-shadow 0.3s;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.8);
+        }
+        .social-link {
+            transition: transform 0.3s;
+        }
+        .social-link:hover {
+            transform: rotate(10deg) scale(1.2);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        header {
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="sticky top-0 bg-gray-800 shadow-lg z-50" data-aos="fade-down" data-aos-duration="800">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold text-white">Portfolio</a>
+        <div class="space-x-6">
+            <a href="#about" class="text-gray-300 nav-link">About</a>
+            <a href="#skills" class="text-gray-300 nav-link">Skills</a>
+            <a href="#experience" class="text-gray-300 nav-link">Experience</a>
+            <a href="#projects" class="text-gray-300 nav-link">Projects</a>
+            <a href="#achievements" class="text-gray-300 nav-link">Achievements</a>
+            <a href="#connect" class="text-gray-300 nav-link">Connect</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Header Section -->
+<header class="gradient-bg text-white py-24 text-center" data-aos="zoom-in" data-aos-duration="1000">
+    <div id="particles-js"></div>
+    <div class="relative z-10">
+        <img th:src="@{/images/profile.jpg}" alt="Profile Photo" class="w-48 h-48 rounded-full mx-auto mb-6 border-4 border-white shadow-xl" data-aos="fade-up" data-aos-delay="200">
+        <h1 class="text-6xl font-bold mb-3 text-white" data-aos="fade-up" data-aos-delay="400">Vedant Dhole</h1>
+        <p class="text-2xl mb-8 text-gray-200" data-aos="fade-up" data-aos-delay="600">Software Developer</p>
+        <a href="/VedantDholeResume.pdf" download class="inline-block bg-white text-blue-600 px-8 py-3 rounded-full font-semibold btn-glow" data-aos="bounce" data-aos-delay="800">Download Resume</a>
+    </div>
+</header>
+
+<!-- About Me Section -->
+<section id="about" class="py-16 px-4 bg-gray-900" data-aos="slide-up" data-aos-duration="1000">
+    <div class="container mx-auto">
+        <h2 class="text-4xl font-bold text-center text-white mb-8">About Me</h2>
+        <p class="text-lg text-gray-300 text-center max-w-3xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+            I’m a 3rd-year Information Technology student at Government College of Engineering, Amravati, with a CGPA of 8.20. Passionate about Java, Spring Boot, and Machine Learning, I excel in building impactful solutions and solving complex problems through code. My experience includes a project-based internship at Infosys Springboard and multiple AI-driven projects, complemented by a 1st-place win in Code Hunt at a national-level tech fest.
+        </p>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="py-16 px-4 bg-gray-800" data-aos="zoom-in" data-aos-duration="1000">
+    <div class="container mx-auto">
+        <h2 class="text-4xl font-bold text-center text-white mb-8">Skills</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div th:each="skill : ${skills}" class="bg-gray-700 p-6 rounded-lg card" data-aos="flip-right" data-aos-delay="${skillStat.index * 150}">
+                <h3 class="text-xl font-semibold text-white" th:text="${skill.name}">Skill Name</h3>
+                <p class="text-gray-300 mt-2" th:text="${skill.category != null ? skill.category : 'N/A'}">Category</p>
+                <p class="text-gray-300" th:text="${skill.proficiency != null ? skill.proficiency : 'N/A'}">Proficiency</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section id="experience" class="py-16 px-4 bg-gray-900" data-aos="slide-up" data-aos-duration="1000">
+    <div class="container mx-auto">
+        <h2 class="text-4xl font-bold text-center text-white mb-8">Experience</h2>
+        <div class="space-y-8">
+            <div th:each="experience : ${experiences}" class="bg-gray-700 p-6 rounded-lg card" data-aos="fade-left" data-aos-delay="${experienceStat.index * 150}">
+                <h3 class="text-xl font-semibold text-white" th:text="${experience.jobTitle}">Job Title</h3>
+                <p class="text-gray-300" th:text="${experience.company + ' | ' + experience.startDate + ' - ' + (experience.endDate != null ? experience.endDate : 'Present')}">Company | Dates</p>
+                <p class="text-gray-300 mt-2" th:text="${experience.description != null ? experience.description : 'N/A'}">Description</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Academic Projects Section -->
+<section id="projects" class="py-16 px-4 bg-gray-800" data-aos="zoom-in" data-aos-duration="1000">
+    <div class="container mx-auto">
+        <h2 class="text-4xl font-bold text-center text-white mb-8">Academic Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div th:each="project : ${projects}" class="bg-gray-700 p-6 rounded-lg card" data-aos="rotate" data-aos-delay="${projectStat.index * 150}">
+                <h3 class="text-xl font-semibold text-white" th:text="${project.title}">Project Title</h3>
+                <p class="text-gray-300 mt-2" th:text="${project.description != null ? project.description : 'N/A'}">Description</p>
+                <a th:href="${project.link != null ? project.link : '#'}" class="text-blue-400 hover:text-blue-300 mt-3 inline-block">View Project</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Achievements Section -->
+<section id="achievements" class="py-16 px-4 bg-gray-900" data-aos="slide-up" data-aos-duration="1000">
+    <div class="container mx-auto">
+        <h2 class="text-4xl font-bold text-center text-white mb-8">Achievements</h2>
+        <div class="space-y-8">
+            <div th:each="achievement : ${achievements}" class="bg-gray-700 p-6 rounded-lg card" data-aos="fade-right" data-aos-delay="${achievementStat.index * 150}">
+                <h3 class="text-xl font-semibold text-white" th:text="${achievement.title}">Achievement Title</h3>
+                <p class="text-gray-300 mt-2" th:text="${achievement.description != null ? achievement.description : 'N/A'}">Description</p>
+                <p class="text-gray-300 mt-1" th:text="${achievement.date != null ? achievement.date : 'N/A'}">Date</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Let's Connect Section -->
+<section id="connect" class="gradient-bg text-white py-16 px-4" data-aos="zoom-in" data-aos-duration="1000">
+    <div class="container mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-8" data-aos="fade-up" data-aos-delay="200">Let's Connect</h2>
+        <p class="text-lg text-gray-200 mb-6 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="400">
+            Reach out to me via email or follow me on social media to collaborate or discuss opportunities!
+        </p>
+        <div class="flex justify-center space-x-8" data-aos="fade-up" data-aos-delay="600">
+            <a href="vedantdhole04@gmail.com" class="text-white text-2xl social-link">Email</a>
+            <a href="https://www.linkedin.com/in/vedant-dhole-05934824a/" class="text-white text-2xl social-link">LinkedIn</a>
+            <a href="https://github.com/vedantgit04" class="text-white text-2xl social-link">GitHub</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="bg-gray-800 py-6 px-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <div class="container mx-auto text-center">
+        <p class="text-lg text-blue-400 footer-text">This project is made with Java, Spring Boot, MySQL, and Thymeleaf</p>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<!-- AOS JavaScript -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- Particles.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        once: false, // Repeat animations on scroll
+        duration: 1000
+    });
+
+    // Initialize Particles.js
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: '#3b82f6' },
+            shape: { type: 'circle' },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            line_linked: { enable: true, distance: 150, color: '#8b5cf6', opacity: 0.4, width: 1 },
+            move: { enable: true, speed: 3, direction: 'none', random: true }
+        },
+        interactivity: {
+            detect_on: 'canvas',
+            events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+            modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
+        },
+        retina_detect: true
+    });
+</script>
+</body>
+</html>
