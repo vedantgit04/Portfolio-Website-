@@ -16,6 +16,13 @@ public class Skill {
     private String category;
     private String proficiency;
 
+    // Constructors
+    public Skill() {}
+    public Skill(String name, String category,String proficiency) {
+        this.name = name;
+        this.category = category;
+        this.proficiency = proficiency;
+    }
     public Integer getId() {
         return id;
     }

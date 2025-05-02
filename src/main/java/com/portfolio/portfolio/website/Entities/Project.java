@@ -1,10 +1,7 @@
 package com.portfolio.portfolio.website.Entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Project {
@@ -14,8 +11,18 @@ public class Project {
     private Integer id;
 
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String link;
+
+
+    // Constructors
+    public Project() {}
+    public Project(String title, String description, String link) {
+        this.title = title;
+        this.description = description;
+        this.link = link;
+    }
 
     // Getters and Setters
     public Integer getId() {

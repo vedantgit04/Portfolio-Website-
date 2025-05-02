@@ -1,12 +1,9 @@
 package com.portfolio.portfolio.website.Entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-import java.time.LocalDate;
+
 
 @Entity
 public class Experience {
@@ -17,10 +14,20 @@ public class Experience {
 
     private String jobTitle;
     private String company;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String startDate;
+    private String  endDate;
+    @Column(columnDefinition = "TEXT")
     private String description;
 
+    public Experience() {}
+    public Experience(String jobTitle, String company,String startDate,String endDate,String description) {
+        this.jobTitle = jobTitle;
+        this.company = company;
+        this.startDate = startDate;
+        this.endDate = endDate;
+
+        this.description = description;
+    }
     // Getters and Setters
     public Integer getId() {
         return id;
@@ -46,19 +53,19 @@ public class Experience {
         this.company = company;
     }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

@@ -1,9 +1,6 @@
 package com.portfolio.portfolio.website.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Achievement {
@@ -12,9 +9,15 @@ public class Achievement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Integer id;
     private  String title;
+    @Column(columnDefinition = "TEXT")
     private  String description;
     private  String date;
-
+    public Achievement() {}
+    public Achievement(String title, String description,String date) {
+         this.title = title;
+         this.description = description;
+         this.date = date;
+    }
     public Integer getId() {
         return id;
     }
